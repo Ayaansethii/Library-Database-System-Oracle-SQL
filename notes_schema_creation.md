@@ -1,3 +1,5 @@
+# Schema Creation Breakdown 
+
 These are the break down each unique syntax and explain its function in simple terms for the schema_creation.sql file.
 
 ### 1. **`NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY`**
