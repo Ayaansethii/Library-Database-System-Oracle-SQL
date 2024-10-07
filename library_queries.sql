@@ -19,7 +19,7 @@ ORDER BY
 -- 2. List all borrowers with their borrowing limits
 -- This query gets details about borrowers and shows how many books they can borrow.
 SELECT 
-    B.Borrower_ID,  -- Unique identifier for the borrower
+    DISTINCT B.Borrower_ID,  -- Unique identifier for the borrower, ensure uniqueness with DISTINCT
     U.First_Name,  -- Borrower's first name
     U.Last_Name,  -- Borrower's last name
     B.Borrowing_Limit,  -- Maximum number of books the borrower can have
@@ -30,6 +30,7 @@ JOIN
     Users U ON B.User_ID = U.User_ID  -- Join with Users to get borrower names
 ORDER BY 
     B.Borrowing_Limit DESC;  -- Order by borrowing limit from highest to lowest
+
 
 -- 3. Display all administrators and their roles
 -- This query shows details about administrators, including their roles and permissions.
@@ -243,4 +244,33 @@ FROM
     BookAvailability  -- From the BookAvailability view
 ORDER BY 
     Title;  -- Order results by book title
+
+    
+-- 17. Update a Borrower's Payable Amount
+-- This query updates the amount payable by a borrower when they incur additional fines.
+UPDATE 
+    Borrowers  -- Target the Borrowers table
+SET 
+    Amount_Payable = Amount_Payable + 5  -- Increase the payable amount by $5
+WHERE 
+    Borrower_ID = 1;  -- Specify the borrower by their unique ID
+
+    
+--18. Delete a borrower by their unique ID and avoid any errors if the borrower is not found
+DECLARE
+    v_Loan_Number NUMBER := 1;  -- Specify the loan number to delete
+BEGIN
+    -- Attempt to delete the loan record
+    DELETE FROM Loans 
+    WHERE Loan_Number = v_Loan_Number;
+
+    -- Check if any rows were deleted
+    IF SQL%ROWCOUNT = 0 THEN
+        DBMS_OUTPUT.PUT_LINE('No loan found with Loan_Number: ' || v_Loan_Number);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Loan deleted successfully.');
+    END IF;
+END;
+
+
 

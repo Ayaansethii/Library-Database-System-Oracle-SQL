@@ -85,3 +85,4 @@
 - Aliases (`AS`) make columns and tables easier to reference.
 - `DISTINCT` and `GROUP BY` are advanced techniques to avoid duplicates and group data.
 
+---
